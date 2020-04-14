@@ -11,8 +11,9 @@ function create_config() {
   /bin/cp /hadoop/etc/hadoop/yarn-site.xml.bak /hadoop/etc/hadoop/yarn-site.xml
 
   sed -i "s/HADOOP_NAMENODE_HOST/${HADOOP_NAMENODE_HOST}/g" /hadoop/etc/hadoop/core-site.xml
-  sed -i "s/HADOOP_DFS_REPLICATION/${HADOOP_DFS_REPLICATION}/g" /hadoop/etc/hadoop/hdfs-site.xml
-  # sed -i "s/HADOOP_DFS_SECONDRARY_NAMENODE_HOST/${HADOOP_DFS_SECONDRARY_NAMENODE_HOST}/g" /hadoop/etc/hadoop/hdfs-site.xml
+  sed -i "s/HADOOP_DFS_REPLICATION/${HADOOP_DFS_REPLICATION}/g" /hadoop/etc/hadoop/hdfs-site.xml  
+  sed -i "s/HADOOP_NAMENODE_HOST/${HADOOP_NAMENODE_HOST}/g" /hadoop/etc/hadoop/hdfs-site.xml
+  sed -i "s/HADOOP_DFS_SECONDRARY_NAMENODE_HOST/${HADOOP_DFS_SECONDRARY_NAMENODE_HOST}/g" /hadoop/etc/hadoop/hdfs-site.xml
   sed -i "s/HADOOP_NAMENODE_HOST/${HADOOP_NAMENODE_HOST}/g" /hadoop/etc/hadoop/yarn-site.xml
   # sed -i "s/HADOOP_RESOURCEMANAGER_HOST/${HADOOP_RESOURCEMANAGER_HOST}/g" /hadoop/etc/hadoop/yarn-site.xml
   sed -i "s/HADOOP_CURRENT_HOST/${HOST}/g" /hadoop/etc/hadoop/yarn-site.xml
@@ -21,7 +22,7 @@ function create_config() {
 
 function unrecognized_node_type() {
   echo "unrecognized node type"
-  echo "available node type:namenode|secondarynamenode|datanode|resourcemanager|nodemanager"
+  echo "available node type:namenode|secondarynamenode|datanode"
   echo "specific it as HADOOP_NODE_TYPE under spec.containers.env"
   exit 1
 }
