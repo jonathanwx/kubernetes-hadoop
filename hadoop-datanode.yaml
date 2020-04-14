@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-datanode-1
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-datanode
+  serviceName: hadoop-datanode
+  template:
+    metadata:
+      labels:
+        app: hadoop-datanode
+    spec:
+      containers:
+      - name: hadoop-datanode-1
+        imagePullPolicy: IfNotPresent
+        image: jonathanwx/kubernetes-hadoop:2.9.2
+        ports:
+        - containerPort: 50010
+          name: address
+        - containerPort: 50075
+          name: http-address
+        - containerPort: 50475
+          name: https-address
+        - containerPort: 50020
+          name: ipc-address
+        env:
+        - name: HADOOP_NODE_TYPE
+          value: "datanode"
+        envFrom:
+        - configMapRef:
+            name: hadoop-config
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-datanode-2
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-datanode
+  serviceName: hadoop-datanode
+  template:
+    metadata:
+      labels:
+        app: hadoop-datanode
+    spec:
+      containers:
+      - name: hadoop-datanode-2
+        imagePullPolicy: IfNotPresent
+        image: jonathanwx/kubernetes-hadoop:2.9.2
+        ports:
+        - containerPort: 50010
+          name: address
+        - containerPort: 50075
+          name: http-address
+        - containerPort: 50475
+          name: https-address
+        - containerPort: 50020
+          name: ipc-address
+        env:
+        - name: HADOOP_NODE_TYPE
+          value: "datanode"
+        envFrom:
+        - configMapRef:
+            name: hadoop-config
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-datanode-3
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-datanode
+  serviceName: hadoop-datanode
+  template:
+    metadata:
+      labels:
+        app: hadoop-datanode
+    spec:
+      containers:
+      - name: hadoop-datanode-3
+        imagePullPolicy: IfNotPresent
+        image: jonathanwx/kubernetes-hadoop:2.9.2
+        ports:
+        - containerPort: 50010
+          name: address
+        - containerPort: 50075
+          name: http-address
+        - containerPort: 50475
+          name: https-address
+        - containerPort: 50020
+          name: ipc-address
+        env:
+        - name: HADOOP_NODE_TYPE
+          value: "datanode"
+        envFrom:
+        - configMapRef:
+            name: hadoop-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-datanode
+  labels:
+    app: hadoop-datanode
+spec:
+  ports:
+  - port: 50010
+    name: address
+  - port: 50075
+    name: http-address
+  - port: 50475
+    name: https-address
+  - port: 50020
+    name: ipc-address
+  selector:
+    app: hadoop-datanode
+  clusterIP: None

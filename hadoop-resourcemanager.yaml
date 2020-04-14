@@ -1,0 +1,58 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-resourcemanager
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-resourcemanager  
+  serviceName: hadoop-resourcemanager
+  template:
+    metadata:
+      labels:
+        app: hadoop-resourcemanager
+    spec:
+      containers:
+      - name: hadoop-resourcemanager
+        imagePullPolicy: IfNotPresent
+        image: jonathanwx/kubernetes-hadoop:2.9.2
+        ports:
+        - containerPort: 8032
+          name: address
+        - containerPort: 8030
+          name: s-address
+        - containerPort: 8031
+          name: rs-address
+        - containerPort: 8033
+          name: admin-address
+        - containerPort: 8088
+          name: webapp-address
+        env:
+        - name: HADOOP_NODE_TYPE
+          value: "resourcemanager"
+        envFrom:
+        - configMapRef:
+            name: hadoop-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-resourcemanager
+  labels:
+    app: hadoop-resourcemanager
+spec:
+  ports:
+  - port: 8032
+    name: address
+  - port: 8030
+    name: s-address
+  - port: 8031
+    name: rs-address
+  - port: 8033
+    name: admin-address
+  - port: 8088
+    name: webapp-address
+  selector:
+    app: hadoop-resourcemanager
+  clusterIP: None

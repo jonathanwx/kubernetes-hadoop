@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hadoop-config
+data:
+  HADOOP_NAMENODE_HOST: "hadoop-namenode-0.hadoop-namenode"
+  HADOOP_DFS_REPLICATION: "3"

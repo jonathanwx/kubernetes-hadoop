@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-nodemanager
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-nodemanager
+  serviceName: hadoop-nodemanager
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hadoop-nodemanager
+    spec:
+      containers:
+      - name: hadoop-nodemanager
+        imagePullPolicy: IfNotPresent
+        image: jonathanwx/kubernetes-hadoop:2.9.2
+        ports:
+        - containerPort: 8040
+          name: loc-address
+        - containerPort: 8042
+          name: webapp-address
+        - containerPort: 8041
+          name: address
+        env:
+        - name: HADOOP_NODE_TYPE
+          value: "nodemanager"
+        envFrom:
+        - configMapRef:
+            name: hadoop-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-nodemanager
+  labels:
+    app: hadoop-nodemanager
+spec:
+  ports:
+  - port: 8040
+    name: loc-address
+  - port: 8042
+    name: webapp-address
+  - port: 8041
+    name: address
+  selector:
+    app: hadoop-nodemanager
+  clusterIP: None

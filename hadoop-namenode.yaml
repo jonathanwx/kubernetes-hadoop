@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-namenode
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-namenode
+  serviceName: hadoop-namenode
+  template:
+    metadata:
+      labels:
+        app: hadoop-namenode
+    spec:
+      containers:
+      - name: hadoop-namenode
+        imagePullPolicy: IfNotPresent
+        image: jonathanwx/kubernetes-hadoop:2.9.2
+        ports:
+        - containerPort: 50070
+          name: http-address
+        - containerPort: 50470
+          name: https-address
+        - containerPort: 8020
+          name: default-fs
+        env:
+        - name: HADOOP_NODE_TYPE
+          value: "namenode"
+        envFrom:
+        - configMapRef:
+            name: hadoop-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-namenode
+  labels:
+    app: hadoop-namenode
+spec:
+  ports:
+  - port: 50070
+    nodePort: 30070
+    targetPort: 50070
+    name: http-address
+  - port: 50470
+    name: https-address
+  - port: 8020
+    name: default-fs
+  selector:
+    app: hadoop-namenode
+  type: NodePort

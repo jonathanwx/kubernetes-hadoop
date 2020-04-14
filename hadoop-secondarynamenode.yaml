@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-secondarynamenode
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-secondarynamenode
+  serviceName: hadoop-secondarynamenode
+  template:
+    metadata:
+      labels:
+        app: hadoop-secondarynamenode
+    spec:
+      hostname: hadoop-secondarynamenode
+      containers:
+      - name: hadoop-secondarynamenode
+        imagePullPolicy: IfNotPresent
+        image: jonathanwx/kubernetes-hadoop:2.9.2
+        ports:
+        - containerPort: 50090
+          name: http-address
+        - containerPort: 50470
+          name: https-address
+        - containerPort: 8020
+          name: default-fs
+        env:
+        - name: HADOOP_NODE_TYPE
+          value: "secondarynamenode"
+        envFrom:
+        - configMapRef:
+            name: hadoop-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-secondarynamenode
+  labels:
+    app: hadoop-secondarynamenode
+spec:
+  ports:
+  - port: 50090
+    nodePort: 30072
+    targetPort: 50090
+    name: http-address
+  - port: 50470
+    name: https-address
+  - port: 8020
+    name: default-fs
+  selector:
+    app: hadoop-secondarynamenode
+  type: NodePort
