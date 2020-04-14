@@ -21,7 +21,7 @@
  </property>
   <property>
     <name>dfs.namenode.secondary.http-address</name>
-    <value>HADOOP_DFS_SECONDRARY_NAMENODE_HOST:50090</value>
+    <value>HADOOP_SECONDRARY_NAMENODE_HOST:50090</value>
   </property>
   <property>
     <name>dfs.permissions</name>
