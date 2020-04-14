@@ -14,6 +14,15 @@
     <name>dfs.replication</name>
     <value>HADOOP_DFS_REPLICATION</value>
   </property>
+
+  <property>
+    <name>dfs.http.address</name>
+    <value>HADOOP_NAMENODE_HOST:50070</value>
+ </property>
+  <property>
+    <name>dfs.namenode.secondary.http-address</name>
+    <value>HADOOP_DFS_SECONDRARY_NAMENODE_HOST:50090</value>
+  </property>
   <property>
     <name>dfs.permissions</name>
     <value>false</value>
