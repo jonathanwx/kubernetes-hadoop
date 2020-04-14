@@ -13,7 +13,7 @@ function create_config() {
   sed -i "s/HADOOP_NAMENODE_HOST/${HADOOP_NAMENODE_HOST}/g" /hadoop/etc/hadoop/core-site.xml
   sed -i "s/HADOOP_DFS_REPLICATION/${HADOOP_DFS_REPLICATION}/g" /hadoop/etc/hadoop/hdfs-site.xml  
   sed -i "s/HADOOP_NAMENODE_HOST/${HADOOP_NAMENODE_HOST}/g" /hadoop/etc/hadoop/hdfs-site.xml
-  sed -i "s/HADOOP_DFS_SECONDRARY_NAMENODE_HOST/${HADOOP_DFS_SECONDRARY_NAMENODE_HOST}/g" /hadoop/etc/hadoop/hdfs-site.xml
+  sed -i "s/HADOOP_SECONDRARY_NAMENODE_HOST/${HADOOP_SECONDRARY_NAMENODE_HOST}/g" /hadoop/etc/hadoop/hdfs-site.xml
   sed -i "s/HADOOP_NAMENODE_HOST/${HADOOP_NAMENODE_HOST}/g" /hadoop/etc/hadoop/yarn-site.xml
   # sed -i "s/HADOOP_RESOURCEMANAGER_HOST/${HADOOP_RESOURCEMANAGER_HOST}/g" /hadoop/etc/hadoop/yarn-site.xml
   sed -i "s/HADOOP_CURRENT_HOST/${HOST}/g" /hadoop/etc/hadoop/yarn-site.xml
