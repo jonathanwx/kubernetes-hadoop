@@ -25,4 +25,13 @@
     <name>hadoop.tmp.dir</name>
     <value>/hadoop/tmp</value>
   </property>
+
+  <property>
+    <name>fs.checkpoint.period</name>
+    <value>3600</value>
+  </property>
+  <property>
+    <name>fs.checkpoint.size</name>
+    <value>67108864</value>
+  </property>
 </configuration>
