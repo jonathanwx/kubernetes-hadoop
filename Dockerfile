@@ -23,6 +23,12 @@ RUN apt-get update && apt-get install -y wget iputils-ping lsof
 RUN wget https://downloads.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz
 RUN tar -xzvf hadoop-${HADOOP_VERSION}.tar.gz -C / && mv /hadoop-${HADOOP_VERSION} /hadoop
 
+# fix bugs  https://help.aliyun.com/noticelist/articleid/1060035134.html
+RUN rm -rf /hadoop/share/hadoop/hdfs/lib/jackson-annotations-2.7.8.jar /hadoop/share/hadoop/hdfs/lib/jackson-core-2.7.8.jar /hadoop/share/hadoop/hdfs/lib/jackson-databind-2.7.8.jar
+RUN wget -P /hadoop/share/hadoop/hdfs/lib https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.9.10.4/jackson-databind-2.9.10.4.jar
+RUN wget -P /hadoop/share/hadoop/hdfs/lib https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.9.10/jackson-annotations-2.9.10.jar
+RUN wget -P /hadoop/share/hadoop/hdfs/lib https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.9.10/jackson-core-2.9.10.jar
+
 COPY conf/* /hadoop/etc/hadoop/
 COPY scripts/start.sh /
 RUN chmod +x /start.sh
