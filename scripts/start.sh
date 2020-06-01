@@ -31,7 +31,7 @@ create_config
 
 if [ "${HADOOP_NODE_TYPE}" != "" ]; then
   if [ "${HADOOP_NODE_TYPE}" == "namenode" ]; then
-    if test ! -e "/hadoop/data/name"; then
+    if test ! -e "/hadoop/hdfs/name"; then
       /hadoop/bin/hadoop namenode -format
     fi
     /hadoop/bin/hdfs namenode
